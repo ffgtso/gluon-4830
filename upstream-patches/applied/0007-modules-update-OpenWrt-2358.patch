@@ -1,0 +1,62 @@
+From 7e7dfceadcc292913def8c0065c811dd29a4a84c Mon Sep 17 00:00:00 2001
+From: David Bauer <mail@david-bauer.net>
+Date: Sat, 1 Jan 2022 19:21:36 +0100
+Subject: [PATCH] modules: update OpenWrt (#2358)
+
+81d0b4a9f4 kernel: bump 4.14 to 4.14.259
+1d94f72439 kernel: bump 4.14 to 4.14.258
+cc8c1be438 mac80211: Update to version 4.19.221
+554f1b89aa iproute2: m_xt.so depends on dynsyms.list
+f14bc5cf56 uboot-lantiq: danube: fix hanging lzma kernel uncompression #2
+8fb714edd6 uboot-lantiq: danube: fix hanging lzma kernel uncompression
+b5b526285a wireless-regdb: update to version 2021.08.28
+a5c479a200 wireless-regdb: update to version 2021.04.21
+b9f866825f tools/m4: update to 1.4.19
+662fe6a6ee kernel: bump 4.14 to 4.14.254
+5e8b9624f1 ar71xx: mikrotik: rb91x: fix 10M ethernet link speed
+c72ea2a6c7 uboot-lantiq: fix sha1.h header clash when system libmd installed
+93a48cb1a0 kernel: bump 4.14 to 4.14.248
+123d12eada mac80211: Update to backports-4.19.207-1
+31a2d41d64 sdk: fix missing include directories
+556d165dda uboot-zynq: fix dtc compilation on host gcc 10
+f33dc315cb uboot-tegra: Fix build with GCC-10 as host compiler
+f31bb35b63 uboot-mvebu: Fix build with GCC-10 as host compiler
+e8cf46ebba uboot-layerscape: fix dtc compilation on host gcc 10
+d059ce28f5 uboot-kirkwood: Fix build with GCC-10 as host compiler
+af5c8856f8 uboot-sunxi: Fix build with GCC-10 as host compiler
+
+Signed-off-by: David Bauer <mail@david-bauer.net>
+---
+ modules                                                         | 2 +-
+ ...ement-MLD-Querier-wake-up-calls-Android-bug-workaround.patch | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/modules b/modules
+index 27f64125..c94649ce 100644
+--- a/modules
++++ b/modules
+@@ -2,7 +2,7 @@ GLUON_FEEDS='packages routing gluon'
+ 
+ OPENWRT_REPO=https://github.com/openwrt/openwrt.git
+ OPENWRT_BRANCH=openwrt-19.07
+-OPENWRT_COMMIT=9882a54c4848e2e282bca435c6aa0025d9fa37df
++OPENWRT_COMMIT=81d0b4a9f431b2b2ca71edca91febedde98994a3
+ 
+ PACKAGES_PACKAGES_REPO=https://github.com/openwrt/packages.git
+ PACKAGES_PACKAGES_BRANCH=openwrt-19.07
+diff --git a/patches/openwrt/0015-kernel-bridge-Implement-MLD-Querier-wake-up-calls-Android-bug-workaround.patch b/patches/openwrt/0015-kernel-bridge-Implement-MLD-Querier-wake-up-calls-Android-bug-workaround.patch
+index ad9abfd1..c08c3d2d 100644
+--- a/patches/openwrt/0015-kernel-bridge-Implement-MLD-Querier-wake-up-calls-Android-bug-workaround.patch
++++ b/patches/openwrt/0015-kernel-bridge-Implement-MLD-Querier-wake-up-calls-Android-bug-workaround.patch
+@@ -1954,7 +1954,7 @@ index 0000000000000000000000000000000000000000..92bb9275df9d54778ce8f00b1cb6e999
+ +2.27.0
+ +
+ diff --git a/target/linux/generic/config-4.14 b/target/linux/generic/config-4.14
+-index de8dd8bb8ad05ec1992800b2c8abb2dec2492649..fc793706dcfe536080a155e79baee65e274e49ca 100644
++index cbe2c09af91dcbb036bb71d42b6b1075d7f31012..e7faafd719656769fe2e43ff9145abc28b806827 100644
+ --- a/target/linux/generic/config-4.14
+ +++ b/target/linux/generic/config-4.14
+ @@ -629,6 +629,7 @@ CONFIG_BRIDGE=y
+-- 
+2.17.1
+

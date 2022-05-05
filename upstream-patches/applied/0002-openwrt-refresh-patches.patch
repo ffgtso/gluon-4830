@@ -1,0 +1,47 @@
+From de8fbbdf6afa87a7bf20631a08b15ca20c345973 Mon Sep 17 00:00:00 2001
+From: David Bauer <mail@david-bauer.net>
+Date: Sat, 14 Aug 2021 19:56:29 +0200
+Subject: [PATCH] openwrt: refresh patches
+
+---
+ ...0211-create-channel-list-for-fixed-channel-operation.patch | 4 ++--
+ ...ent-MLD-Querier-wake-up-calls-Android-bug-workaround.patch | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/patches/openwrt/0013-mac80211-create-channel-list-for-fixed-channel-operation.patch b/patches/openwrt/0013-mac80211-create-channel-list-for-fixed-channel-operation.patch
+index c2178b1e..729a3e57 100644
+--- a/patches/openwrt/0013-mac80211-create-channel-list-for-fixed-channel-operation.patch
++++ b/patches/openwrt/0013-mac80211-create-channel-list-for-fixed-channel-operation.patch
+@@ -13,10 +13,10 @@ circumvent this issue.
+ Signed-off-by: David Bauer <mail@david-bauer.net>
+ 
+ diff --git a/package/kernel/mac80211/files/lib/netifd/wireless/mac80211.sh b/package/kernel/mac80211/files/lib/netifd/wireless/mac80211.sh
+-index 36aebbb2ccfec2137d5d260fe2111d77f531ddec..367a3e8e37a8e8435c35ca2912ef0855efbdfc78 100644
++index bb48ab9a15e470b6807693e08fdc84fb3c94aeed..272fb2a726bb34fa3ab74dfe48150197dbf918ca 100644
+ --- a/package/kernel/mac80211/files/lib/netifd/wireless/mac80211.sh
+ +++ b/package/kernel/mac80211/files/lib/netifd/wireless/mac80211.sh
+-@@ -100,6 +100,9 @@ mac80211_hostapd_setup_base() {
++@@ -101,6 +101,9 @@ mac80211_hostapd_setup_base() {
+  	json_get_vars noscan ht_coex
+  	json_get_values ht_capab_list ht_capab tx_burst
+  
+diff --git a/patches/openwrt/0015-kernel-bridge-Implement-MLD-Querier-wake-up-calls-Android-bug-workaround.patch b/patches/openwrt/0015-kernel-bridge-Implement-MLD-Querier-wake-up-calls-Android-bug-workaround.patch
+index ad9cc4f1..ad9abfd1 100644
+--- a/patches/openwrt/0015-kernel-bridge-Implement-MLD-Querier-wake-up-calls-Android-bug-workaround.patch
++++ b/patches/openwrt/0015-kernel-bridge-Implement-MLD-Querier-wake-up-calls-Android-bug-workaround.patch
+@@ -1954,10 +1954,10 @@ index 0000000000000000000000000000000000000000..92bb9275df9d54778ce8f00b1cb6e999
+ +2.27.0
+ +
+ diff --git a/target/linux/generic/config-4.14 b/target/linux/generic/config-4.14
+-index d54ede9efda0a3ffd84e9a0c49dc410a01737d82..15b50523bf55d9a77fc1655ec6ba6ffde6d93a3e 100644
++index de8dd8bb8ad05ec1992800b2c8abb2dec2492649..fc793706dcfe536080a155e79baee65e274e49ca 100644
+ --- a/target/linux/generic/config-4.14
+ +++ b/target/linux/generic/config-4.14
+-@@ -628,6 +628,7 @@ CONFIG_BRIDGE=y
++@@ -629,6 +629,7 @@ CONFIG_BRIDGE=y
+  # CONFIG_BRIDGE_EBT_T_NAT is not set
+  # CONFIG_BRIDGE_EBT_VLAN is not set
+  CONFIG_BRIDGE_IGMP_SNOOPING=y
+-- 
+2.17.1
+

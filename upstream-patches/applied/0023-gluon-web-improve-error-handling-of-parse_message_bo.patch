@@ -1,0 +1,105 @@
+From f4ae80e73ba4aae6763b7075911976c5880e4cce Mon Sep 17 00:00:00 2001
+From: Matthias Schiffer <mschiffer@universe-factory.net>
+Date: Tue, 25 Jan 2022 20:56:00 +0100
+Subject: [PATCH] gluon-web: improve error handling of parse_message_body()
+
+Actually raise an error and turn it into an HTTP 400 return code when
+something goes wrong, rather than ignoring the error.
+
+We also improve the conditions under which errors are thrown before
+pump() is called: We don't need to check for the multipart/form-data
+content-type twice, and a POST without this content-type is now always
+an error.
+
+(cherry picked from commit f3960eeb471e745d1dfedc87ee82c42809ce83e1)
+---
+ .../usr/lib/lua/gluon/web/dispatcher.lua      | 10 ++++++--
+ .../usr/lib/lua/gluon/web/http/protocol.lua   | 23 +++++++------------
+ 2 files changed, 16 insertions(+), 17 deletions(-)
+
+diff --git a/package/gluon-web/luasrc/usr/lib/lua/gluon/web/dispatcher.lua b/package/gluon-web/luasrc/usr/lib/lua/gluon/web/dispatcher.lua
+index 617b17a7..3aca99dc 100644
+--- a/package/gluon-web/luasrc/usr/lib/lua/gluon/web/dispatcher.lua
++++ b/package/gluon-web/luasrc/usr/lib/lua/gluon/web/dispatcher.lua
+@@ -184,9 +184,15 @@ local function dispatch(config, http, request)
+ 		return
+ 	end
+ 
+-	http:parse_input(node.filehandler)
++	local ok, err = pcall(http.parse_input, http, node.filehandler)
++	if not ok then
++		http:status(400, "Bad request")
++		http:prepare_content("text/plain")
++		http:write(err .. "\r\n")
++		return
++	end
+ 
+-	local ok, err = pcall(node.target)
++	ok, err = pcall(node.target)
+ 	if not ok then
+ 		http:status(500, "Internal Server Error")
+ 		renderer.render_layout("error/500", {
+diff --git a/package/gluon-web/luasrc/usr/lib/lua/gluon/web/http/protocol.lua b/package/gluon-web/luasrc/usr/lib/lua/gluon/web/http/protocol.lua
+index 8d070d95..62b60bdc 100644
+--- a/package/gluon-web/luasrc/usr/lib/lua/gluon/web/http/protocol.lua
++++ b/package/gluon-web/luasrc/usr/lib/lua/gluon/web/http/protocol.lua
+@@ -108,16 +108,11 @@ end
+ --  o String value containing a chunk of the file data
+ --  o Boolean which indicates whether the current chunk is the last one (eof)
+ local function mimedecode_message_body(src, msg, filecb)
+-
+-	if msg and msg.env.CONTENT_TYPE then
+-		msg.mime_boundary = msg.env.CONTENT_TYPE:match("^multipart/form%-data; boundary=(.+)$")
+-	end
+-
+-	if not msg.mime_boundary then
+-		return nil, "Invalid Content-Type found"
++	local mime_boundary = (msg.env.CONTENT_TYPE or ''):match("^multipart/form%-data; boundary=(.+)$")
++	if not mime_boundary then
++		error("Invalid Content-Type found")
+ 	end
+ 
+-
+ 	local tlen   = 0
+ 	local inhdr  = false
+ 	local field  = nil
+@@ -188,10 +183,10 @@ local function mimedecode_message_body(src, msg, filecb)
+ 			local spos, epos, found
+ 
+ 			repeat
+-				spos, epos = data:find("\r\n--" .. msg.mime_boundary .. "\r\n", 1, true)
++				spos, epos = data:find("\r\n--" .. mime_boundary .. "\r\n", 1, true)
+ 
+ 				if not spos then
+-					spos, epos = data:find("\r\n--" .. msg.mime_boundary .. "--\r\n", 1, true)
++					spos, epos = data:find("\r\n--" .. mime_boundary .. "--\r\n", 1, true)
+ 				end
+ 
+ 
+@@ -250,20 +245,18 @@ local function mimedecode_message_body(src, msg, filecb)
+ 		return true
+ 	end
+ 
+-	return pump(src, snk)
++	assert(pump(src, snk))
+ end
+ 
+ -- This function will examine the Content-Type within the given message object
+ -- to select the appropriate content decoder.
+ -- Currently only the multipart/form-data mime type is supported.
+ function M.parse_message_body(src, msg, filecb)
+-	if not (msg.env.REQUEST_METHOD == "POST" and msg.env.CONTENT_TYPE) then
++	if msg.env.REQUEST_METHOD ~= "POST" then
+ 		return
+ 	end
+ 
+-	if msg.env.CONTENT_TYPE:match("^multipart/form%-data") then
+-		return mimedecode_message_body(src, msg, filecb)
+-	end
++	mimedecode_message_body(src, msg, filecb)
+ end
+ 
+ return M
+-- 
+2.17.1
+

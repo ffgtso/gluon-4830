@@ -1,0 +1,33 @@
+From 16545edf3e04fa9a902166f2d39033888409b965 Mon Sep 17 00:00:00 2001
+From: "J. Burfeind" <git@aiyionpri.me>
+Date: Fri, 7 Jan 2022 21:35:15 +0100
+Subject: [PATCH] gluon-status-page: split bwlimit into two lines (#2371)
+
+Fixes: 1cb0fc84fc24 ("gluon-status-page: swap bandwidth limits (#2304)")
+Resolves #2370
+
+(cherry picked from commit 7427ba2280ac1da1e8459e05ab100544190f7b28)
+---
+ .../files/lib/gluon/status-page/view/status-page.html         | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html b/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html
+index 73029d1d..6957599f 100644
+--- a/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html
++++ b/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html
+@@ -168,10 +168,10 @@
+ 						<dt><%:Bandwidth limit%></dt>
+ 						<dd>
+ 							<% if nodeinfo.network.mesh_vpn.bandwidth_limit.ingress then -%>
+-								▼ <%| formatBits(nodeinfo.network.mesh_vpn.bandwidth_limit.ingress*1000) %>/s <%:downstream%>
++								▼ <%| formatBits(nodeinfo.network.mesh_vpn.bandwidth_limit.ingress*1000) %>/s <%:downstream%><br />
+ 							<%- end %>
+ 							<% if nodeinfo.network.mesh_vpn.bandwidth_limit.egress then -%>
+-								▲ <%| formatBits(nodeinfo.network.mesh_vpn.bandwidth_limit.egress*1000) %>/s <%:upstream%><br />
++								▲ <%| formatBits(nodeinfo.network.mesh_vpn.bandwidth_limit.egress*1000) %>/s <%:upstream%>
+ 							<%- end %>
+ 						</dd>
+ 						<%- end %>
+-- 
+2.17.1
+

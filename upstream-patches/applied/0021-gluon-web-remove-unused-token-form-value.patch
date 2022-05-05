@@ -1,0 +1,57 @@
+From b41cf745092099329e4ea7aa2968dac2f374be75 Mon Sep 17 00:00:00 2001
+From: Matthias Schiffer <mschiffer@universe-factory.net>
+Date: Tue, 25 Jan 2022 20:10:55 +0100
+Subject: [PATCH] gluon-web-*: remove unused "token" form value
+
+This was a remnant of LuCI that was never used in gluon-web.
+
+(cherry picked from commit 94519cfc56dab7258f98ca0e77078f15cabaf3df)
+---
+ .../files/lib/gluon/config-mode/view/admin/upgrade.html         | 1 -
+ .../files/lib/gluon/config-mode/view/admin/upgrade_confirm.html | 2 --
+ .../gluon-web-model/files/lib/gluon/web/view/model/form.html    | 1 -
+ 3 files changed, 4 deletions(-)
+
+diff --git a/package/gluon-web-admin/files/lib/gluon/config-mode/view/admin/upgrade.html b/package/gluon-web-admin/files/lib/gluon/config-mode/view/admin/upgrade.html
+index 31555f16..7778be4a 100644
+--- a/package/gluon-web-admin/files/lib/gluon/config-mode/view/admin/upgrade.html
++++ b/package/gluon-web-admin/files/lib/gluon/config-mode/view/admin/upgrade.html
+@@ -44,7 +44,6 @@ $Id$
+ 
+ 	<div class="gluon-page-actions">
+ 		<input type="hidden" name="step" value="2" />
+-		<input type="hidden" name="token" value="<%=token%>" />
+ 		<input class="gluon-button gluon-button-submit" type="submit" value="<%:Upload image%>" />
+ 	</div>
+ </form>
+diff --git a/package/gluon-web-admin/files/lib/gluon/config-mode/view/admin/upgrade_confirm.html b/package/gluon-web-admin/files/lib/gluon/config-mode/view/admin/upgrade_confirm.html
+index 92c25a63..9733132f 100644
+--- a/package/gluon-web-admin/files/lib/gluon/config-mode/view/admin/upgrade_confirm.html
++++ b/package/gluon-web-admin/files/lib/gluon/config-mode/view/admin/upgrade_confirm.html
+@@ -49,13 +49,11 @@ You may obtain a copy of the License at
+   <form method="post" enctype="multipart/form-data" action="<%|url(request)%>" style="display:inline">
+     <input type="hidden" name="step" value="3" />
+     <input type="hidden" name="keepcfg" value="<%=keepconfig and "1" or "0"%>" />
+-    <input type="hidden" name="token" value="<%=token%>" />
+     <input class="gluon-button gluon-button-submit" type="submit" value="<%:Continue%>" />
+   </form>
+   <form method="post" enctype="multipart/form-data" action="<%|url(request)%>" style="display:inline">
+     <input type="hidden" name="step" value="1" />
+     <input type="hidden" name="keepcfg" value="<%=keepconfig and "1" or "0"%>" />
+-    <input type="hidden" name="token" value="<%=token%>" />
+     <input class="gluon-button gluon-button-reset" type="submit" value="<%:Cancel%>" />
+   </form>
+ </div>
+diff --git a/package/gluon-web-model/files/lib/gluon/web/view/model/form.html b/package/gluon-web-model/files/lib/gluon/web/view/model/form.html
+index 06270be3..d222dde2 100644
+--- a/package/gluon-web-model/files/lib/gluon/web/view/model/form.html
++++ b/package/gluon-web-model/files/lib/gluon/web/view/model/form.html
+@@ -1,5 +1,4 @@
+ <form method="post" enctype="multipart/form-data" action="<%|url(request)%>" data-update="reset">
+-	<input type="hidden" name="token" value="<%=token%>" />
+ 	<input type="hidden" name="<%=id%>" value="1" />
+ 
+ 	<div class="gluon-form" id="form-<%=id%>">
+-- 
+2.17.1
+

@@ -1,0 +1,93 @@
+From e7e634396efdd0ada86cfe728262bb6524a9b448 Mon Sep 17 00:00:00 2001
+From: Martin Weinelt <mweinelt@users.noreply.github.com>
+Date: Tue, 21 Dec 2021 21:40:27 +0100
+Subject: [PATCH] Add helper to run a containerized build environment (#2292)
+
+Using `make container` or, if you don't have automake/gmake on your host
+system, `./scripts/container.sh` will build an image for the current
+branch your are on and drop you into a shell running inside a container
+using that image.
+
+From there all tooling required to work on Gluon is available.
+
+Supports both podman (preferred) and docker.
+
+(cherry picked from commit 6728c4a10379dec56f366cb34c6ad9d39c070d7e)
+---
+ Makefile                        |  4 ++++
+ contrib/{ => docker}/Dockerfile |  0
+ docs/user/getting_started.rst   |  6 ++++++
+ scripts/container.sh            | 24 ++++++++++++++++++++++++
+ 4 files changed, 34 insertions(+)
+ rename contrib/{ => docker}/Dockerfile (100%)
+ create mode 100755 scripts/container.sh
+
+diff --git a/Makefile b/Makefile
+index 76aa9cb2..68179393 100644
+--- a/Makefile
++++ b/Makefile
+@@ -177,6 +177,10 @@ config: $(LUA) FORCE
+ 	$(GLUON_ENV) $(LUA) scripts/target_config_check.lua
+ 
+ 
++container: FORCE
++	@scripts/container.sh
++
++
+ all: config
+ 	+@
+ 	$(GLUON_ENV) $(LUA) scripts/clean_output.lua
+diff --git a/contrib/Dockerfile b/contrib/docker/Dockerfile
+similarity index 100%
+rename from contrib/Dockerfile
+rename to contrib/docker/Dockerfile
+diff --git a/docs/user/getting_started.rst b/docs/user/getting_started.rst
+index 4d206732..7fb7b37e 100644
+--- a/docs/user/getting_started.rst
++++ b/docs/user/getting_started.rst
+@@ -40,6 +40,12 @@ freshly installed Debian Stretch system the following packages are required:
+ * `time` (built-in `time` doesn't work)
+ 
+ 
++We also provide a container environment that already tracks all these dependencies. It quickly gets you up and running, if you already have either Docker or Podman installed locally.
++
++::
++
++   ./scripts/container.sh
++
+ Building the images
+ -------------------
+ 
+diff --git a/scripts/container.sh b/scripts/container.sh
+new file mode 100755
+index 00000000..c18bf322
+--- /dev/null
++++ b/scripts/container.sh
+@@ -0,0 +1,24 @@
++#!/usr/bin/env bash
++
++set -euo pipefail
++
++# move into base directory, in case this script is not executed via `make container`
++cd "$(dirname "$0")/.."
++
++# normalize branch name to reflect a valid image name
++BRANCH=$(git branch --show-current | sed 's/[^a-z0-9-]/_/ig')
++TAG=gluon:${BRANCH}
++
++if [ "$(command -v podman)" ]
++then
++	podman build -t "${TAG}" contrib/docker
++	podman run -it --rm --userns=keep-id --volume="$(pwd):/gluon" "${TAG}"
++elif [ "$(command -v docker)" ]
++then
++	docker build -t "${TAG}" contrib/docker
++	docker run -it --rm --volume="$(pwd):/gluon" "${TAG}"
++else
++	1>&2 echo "Please install either podman or docker. Exiting" >/dev/null
++	exit 1
++fi
++
+-- 
+2.17.1
+

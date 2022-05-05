@@ -1,0 +1,33 @@
+From 3e2a53f1d09080777b0cc2ff0bf17f53ac11b156 Mon Sep 17 00:00:00 2001
+From: Tom Herbers <mail@tomherbers.de>
+Date: Tue, 31 Aug 2021 20:07:17 +0200
+Subject: [PATCH] gluon-status-page: swap bandwidth limits (#2304)
+
+(cherry picked from commit 1cb0fc84fc24e2d31c5f87095fa20ce2c7511283)
+---
+ .../files/lib/gluon/status-page/view/status-page.html       | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html b/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html
+index 90d7ca0b..bdce64fb 100644
+--- a/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html
++++ b/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html
+@@ -162,12 +162,12 @@
+ 						<% if nodeinfo.network.mesh_vpn.bandwidth_limit.enabled then -%>
+ 						<dt><%:Bandwidth limit%></dt>
+ 						<dd>
+-							<% if nodeinfo.network.mesh_vpn.bandwidth_limit.egress then -%>
+-								▲ <%| formatBits(nodeinfo.network.mesh_vpn.bandwidth_limit.egress*1000) %>/s <%:upstream%><br />
+-							<%- end %>
+ 							<% if nodeinfo.network.mesh_vpn.bandwidth_limit.ingress then -%>
+ 								▼ <%| formatBits(nodeinfo.network.mesh_vpn.bandwidth_limit.ingress*1000) %>/s <%:downstream%>
+ 							<%- end %>
++							<% if nodeinfo.network.mesh_vpn.bandwidth_limit.egress then -%>
++								▲ <%| formatBits(nodeinfo.network.mesh_vpn.bandwidth_limit.egress*1000) %>/s <%:upstream%><br />
++							<%- end %>
+ 						</dd>
+ 						<%- end %>
+ 					<%- end %>
+-- 
+2.17.1
+

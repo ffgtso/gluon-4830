@@ -1,0 +1,33 @@
+From 2dad91bdcb315474cb311c892fc08570c567eab0 Mon Sep 17 00:00:00 2001
+From: David Bauer <mail@david-bauer.net>
+Date: Sat, 30 Oct 2021 01:27:43 +0200
+Subject: [PATCH] modules: fix respondd segfault (#2328)
+
+* modules: use v2021.1.x Gluon package branch
+
+* modules: update Gluon packages
+
+015408e respondd-module-airtime: move const specifier to the right location
+d068e7d respondd-module-airtime: remove incorrect fprintf argument
+97981c2 respondd-module-airtime: remove PHY ID again
+8dbd089 respondd-module-airtime: improve error handling
+
+Signed-off-by: David Bauer <mail@david-bauer.net>
+---
+ modules | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/modules b/modules
+index fc16ae8a..27f64125 100644
+--- a/modules
++++ b/modules
+@@ -13,4 +13,5 @@ PACKAGES_ROUTING_BRANCH=openwrt-19.07
+ PACKAGES_ROUTING_COMMIT=101632e153b41238bc19dfd96ba2d23339dbcb76
+ 
+ PACKAGES_GLUON_REPO=https://github.com/freifunk-gluon/packages.git
+-PACKAGES_GLUON_COMMIT=825aa0c093d6c0b4f81a95cd2320331a5b5adae6
++PACKAGES_GLUON_BRANCH=v2021.1.x
++PACKAGES_GLUON_COMMIT=015408e702a5843310e40c2ca664e1903b601204
+-- 
+2.17.1
+

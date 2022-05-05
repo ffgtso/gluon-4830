@@ -1,0 +1,35 @@
+From 8d51a72fe56893d9c78da5a85782fd6868508d86 Mon Sep 17 00:00:00 2001
+From: Martin Weinelt <mweinelt@users.noreply.github.com>
+Date: Mon, 12 Jul 2021 19:23:29 +0200
+Subject: [PATCH] gluon-status-page: relax nodeinfo query timeout (#2262)
+
+It was found that a one second timeout for nodeinfo data may be too low,
+so that when a node is otherwise occupied that timeout may be reached
+too often.
+
+The nodeinfo query response is also vital to the status-page base
+template, so that when it times out, the site will be turned in a broken
+state, that it cannot recover from.
+
+Fixes: #2256
+(cherry picked from commit 76185e3a2a28936afb97afe0e3090fa655340565)
+---
+ .../luasrc/lib/gluon/status-page/controller/status-page.lua     | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/package/gluon-status-page/luasrc/lib/gluon/status-page/controller/status-page.lua b/package/gluon-status-page/luasrc/lib/gluon/status-page/controller/status-page.lua
+index ceb5d855..80c5e50a 100644
+--- a/package/gluon-status-page/luasrc/lib/gluon/status-page/controller/status-page.lua
++++ b/package/gluon-status-page/luasrc/lib/gluon/status-page/controller/status-page.lua
+@@ -61,7 +61,7 @@ local function match(a, b, n)
+ end
+ 
+ entry({}, call(function(http, renderer)
+-	local nodeinfo = json.parse(util.exec('exec gluon-neighbour-info -d ::1 -p 1001 -t 1 -c 1 -r nodeinfo'))
++	local nodeinfo = json.parse(util.exec('exec gluon-neighbour-info -d ::1 -p 1001 -t 3 -c 1 -r nodeinfo'))
+ 
+ 	local node_ip = parse_ip(http:getenv('SERVER_ADDR'))
+ 	if node_ip and (
+-- 
+2.17.1
+

@@ -1,0 +1,79 @@
+From 1837b1e2b357a1ab8c76c142f927b2a3caf870e3 Mon Sep 17 00:00:00 2001
+From: Matthias Schiffer <mschiffer@universe-factory.net>
+Date: Tue, 25 Jan 2022 21:52:02 +0100
+Subject: [PATCH] gluon-web: prohibit cross-origin POST
+
+As gluon-web uses standard multipart/form-data requests, browsers don't
+enforce any cross-origin restrictions. To prevent malicious injection of
+POST requests into the config mode, match the Origin header against the
+Host header of the request.
+
+(cherry picked from commit a83466be6eaad0bfd4d92ffae3dd415a3adbbb9c)
+---
+ .../usr/lib/lua/gluon/web/http/protocol.lua   | 43 +++++++++++++++++++
+ 1 file changed, 43 insertions(+)
+
+diff --git a/package/gluon-web/luasrc/usr/lib/lua/gluon/web/http/protocol.lua b/package/gluon-web/luasrc/usr/lib/lua/gluon/web/http/protocol.lua
+index 62b60bdc..5f56fa1b 100644
+--- a/package/gluon-web/luasrc/usr/lib/lua/gluon/web/http/protocol.lua
++++ b/package/gluon-web/luasrc/usr/lib/lua/gluon/web/http/protocol.lua
+@@ -248,6 +248,47 @@ local function mimedecode_message_body(src, msg, filecb)
+ 	assert(pump(src, snk))
+ end
+ 
++local function check_post_origin(msg)
++	local default_port = '80'
++	local request_scheme = 'http'
++	if msg.env.HTTPS then
++		default_port = '443'
++		request_scheme = 'https'
++	end
++
++	local request_host = msg.env.HTTP_HOST
++	if not request_host then
++		error('POST request without Host header')
++	end
++	if not request_host:match(':[0-9]+$') then
++		request_host = request_host .. ':' .. default_port
++	end
++
++	local origin = msg.env.HTTP_ORIGIN
++	if not origin then
++		error('POST request without Origin header')
++	end
++	local origin_scheme, origin_host = origin:match('^([^:]*)://(.*)$')
++	if not origin_host then
++		error('POST request with invalid Origin header')
++	end
++	if not origin_host:match(':[0-9]+$') then
++		local origin_port
++		if origin_scheme == 'http' then
++			origin_port = '80'
++		elseif origin_scheme == 'https' then
++			origin_port = '443'
++		else
++			error('POST request with invalid Origin header')
++		end
++		origin_host = origin_host .. ':' .. origin_port
++	end
++
++	if request_scheme ~= origin_scheme or request_host ~= origin_host then
++		error('Invalid cross-origin POST')
++	end
++end
++
+ -- This function will examine the Content-Type within the given message object
+ -- to select the appropriate content decoder.
+ -- Currently only the multipart/form-data mime type is supported.
+@@ -256,6 +297,8 @@ function M.parse_message_body(src, msg, filecb)
+ 		return
+ 	end
+ 
++	check_post_origin(msg)
++
+ 	mimedecode_message_body(src, msg, filecb)
+ end
+ 
+-- 
+2.17.1
+

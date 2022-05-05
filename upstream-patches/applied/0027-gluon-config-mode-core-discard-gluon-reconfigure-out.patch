@@ -1,0 +1,35 @@
+From bf8e97014bb1af8de7379fc3ba6dbe151dc503a6 Mon Sep 17 00:00:00 2001
+From: Matthias Schiffer <mschiffer@universe-factory.net>
+Date: Tue, 22 Feb 2022 18:51:45 +0100
+Subject: [PATCH] gluon-config-mode-core: discard gluon-reconfigure output
+ (#2395)
+
+The stdout output of gluon-web scripts is directly sent to uhttpd,
+becoming a part of the HTML output or even replacing HTTP status or
+headers. The output of gluon-reconfigure is not supposed to end up
+there.
+
+While we're at it, also add an exec to avoid an unnecessary shell
+process.
+
+(cherry picked from commit eea49a2834f2ed3070a4ce3e4d840e2b6ce55d5f)
+---
+ .../lib/gluon/config-mode/model/gluon-config-mode/wizard.lua    | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/package/gluon-config-mode-core/luasrc/lib/gluon/config-mode/model/gluon-config-mode/wizard.lua b/package/gluon-config-mode-core/luasrc/lib/gluon/config-mode/model/gluon-config-mode/wizard.lua
+index dfc4ab4c..edfe0bc3 100644
+--- a/package/gluon-config-mode-core/luasrc/lib/gluon/config-mode/model/gluon-config-mode/wizard.lua
++++ b/package/gluon-config-mode-core/luasrc/lib/gluon/config-mode/model/gluon-config-mode/wizard.lua
+@@ -22,7 +22,7 @@ function f:write()
+ 	uci:set("gluon-setup-mode", uci:get_first("gluon-setup-mode", "setup_mode"), "configured", true)
+ 	uci:save("gluon-setup-mode")
+ 
+-	os.execute('gluon-reconfigure')
++	os.execute('exec gluon-reconfigure >/dev/null')
+ 
+ 	f.template = "wizard/reboot"
+ 	f.package = "gluon-config-mode-core"
+-- 
+2.17.1
+

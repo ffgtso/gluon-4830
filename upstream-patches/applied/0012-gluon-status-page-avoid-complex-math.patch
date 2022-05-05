@@ -1,0 +1,46 @@
+From cc20271cb8cf9c4e387e74911701d2e4b368ba2c Mon Sep 17 00:00:00 2001
+From: Matthias Schiffer <mschiffer@universe-factory.net>
+Date: Sat, 7 Aug 2021 21:02:32 +0200
+Subject: [PATCH] gluon-status-page: avoid complex math
+
+This code is usually running on an embedded CPU without FPU. In
+addtition to its inefficience, the algorithm is also much harder to
+understand.
+
+Replace the logarithm formula with a simple loop.
+
+(cherry picked from commit f2e0f7e3a8643b21b5bd832e9fa9c14b18a775de)
+---
+ .../lib/gluon/status-page/view/status-page.html   | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
+
+diff --git a/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html b/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html
+index b7698f4c..6bd90f8b 100644
+--- a/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html
++++ b/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html
+@@ -66,12 +66,17 @@
+ 
+ 	local function formatBits(bits)
+ 		local units = {[0]='', 'k', 'M', 'G'}
++		local unit = 0
++
++		for i = 1, #units do
++			if math.abs(bits) < 1000 then
++				break
++			end
++			unit = i
++			bits = bits / 1000
++		end
+ 
+-		local pow = math.floor(math.log(math.max(math.abs(bits), 1)) / math.log(1000))
+-		local known_pow = math.min(pow, #units)
+-
+-		local significand = bits/(1000^known_pow)
+-		return string.format('%g %sbit', significand, units[known_pow])
++		return string.format('%g %sbit', bits, units[unit])
+ 	end
+ 
+ 	local function statistics(key, format)
+-- 
+2.17.1
+

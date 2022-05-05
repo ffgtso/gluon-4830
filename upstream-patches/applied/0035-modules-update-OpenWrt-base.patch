@@ -1,0 +1,71 @@
+From 5562682b437c7fc5af1eb54846c33b8ec2800b79 Mon Sep 17 00:00:00 2001
+From: Matthias Schiffer <mschiffer@universe-factory.net>
+Date: Wed, 23 Feb 2022 23:33:50 +0100
+Subject: [PATCH] modules: update OpenWrt base
+
+b24905c38a8a kernel: bump 4.14 to 4.14.274
+a518a4f78630 ath79: fix link for long cables with OCEDO Raccoon
+ea0e521d3706 kernel: bump 4.14 to 4.14.273
+0af411f49d43 zlib: backport security fix for a reproducible crash in compressor
+565159db573a kernel: bump 4.14 to 4.14.272
+c5c047f19bc5 openssl: bump to 1.1.1n
+6b8407c6da66 base-files: call "sync" after initial setup
+9ced994057ae kernel: bump 4.14 to 4.14.269
+5ecc7ead4878 imagebuilder: fix partition signature
+f49eec6335ea wolfssl: fix API breakage of SSL_get_verify_result
+cc344f1513ee ubus: backport fixes for UAF and other issues
+31bb27f35b95 wolfssl: bump to 5.1.1-stable
+572a1f9abe45 ar71xx: fix MikroTik wAP detection
+a2482fc3a57c OpenWrt v19.07.9: revert to branch defaults
+106382c27c25 OpenWrt v19.07.9: adjust config defaults
+2a3558b0de17 kernel: bump 4.14 to 4.14.267
+3b6ce4f634cc kernel: bump 4.14 to 4.14.266
+e7596ce0b085 hostapd: Apply SAE/EAP-pwd side-channel attack update 2
+1691c1168d15 mbedtls: Update to version 2.16.12
+419b9f4c4514 mbedtls: update to 2.16.11
+bfa4cccd46c3 tcpdump: libpcap: Remove http://www.us.tcpdump.org mirror
+e92a4e5458ff tcpdump: Fix CVE-2018-16301
+606106fb295e kernel: bump 4.14 to 4.14.265
+524cbcf6f5b0 build: store SOURCE_DATE_EPOCH in JSON info files
+57293f51c48f kernel: bump 4.14 to 4.14.264
+974161d7f891 kernel: bump 4.14 to 4.14.262
+b50eb70e01c6 openssl: bump to 1.1.1m
+5369ceb787b4 kernel: bump 4.14 to 4.14.261
+---
+ modules                                                       | 2 +-
+ ...ent-MLD-Querier-wake-up-calls-Android-bug-workaround.patch | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/modules b/modules
+index c94649ce..22c0e171 100644
+--- a/modules
++++ b/modules
+@@ -2,7 +2,7 @@ GLUON_FEEDS='packages routing gluon'
+ 
+ OPENWRT_REPO=https://github.com/openwrt/openwrt.git
+ OPENWRT_BRANCH=openwrt-19.07
+-OPENWRT_COMMIT=81d0b4a9f431b2b2ca71edca91febedde98994a3
++OPENWRT_COMMIT=b24905c38a8acc337a08c116b343b6ccc3ba861e
+ 
+ PACKAGES_PACKAGES_REPO=https://github.com/openwrt/packages.git
+ PACKAGES_PACKAGES_BRANCH=openwrt-19.07
+diff --git a/patches/openwrt/0015-kernel-bridge-Implement-MLD-Querier-wake-up-calls-Android-bug-workaround.patch b/patches/openwrt/0015-kernel-bridge-Implement-MLD-Querier-wake-up-calls-Android-bug-workaround.patch
+index c08c3d2d..d2a537d3 100644
+--- a/patches/openwrt/0015-kernel-bridge-Implement-MLD-Querier-wake-up-calls-Android-bug-workaround.patch
++++ b/patches/openwrt/0015-kernel-bridge-Implement-MLD-Querier-wake-up-calls-Android-bug-workaround.patch
+@@ -1954,10 +1954,10 @@ index 0000000000000000000000000000000000000000..92bb9275df9d54778ce8f00b1cb6e999
+ +2.27.0
+ +
+ diff --git a/target/linux/generic/config-4.14 b/target/linux/generic/config-4.14
+-index cbe2c09af91dcbb036bb71d42b6b1075d7f31012..e7faafd719656769fe2e43ff9145abc28b806827 100644
++index 217754caa673b0226005c8e4fa7a55749ca0b6c9..d0cc204eccb9ee970790dd47aaf17d510e1374e4 100644
+ --- a/target/linux/generic/config-4.14
+ +++ b/target/linux/generic/config-4.14
+-@@ -629,6 +629,7 @@ CONFIG_BRIDGE=y
++@@ -630,6 +630,7 @@ CONFIG_BRIDGE=y
+  # CONFIG_BRIDGE_EBT_T_NAT is not set
+  # CONFIG_BRIDGE_EBT_VLAN is not set
+  CONFIG_BRIDGE_IGMP_SNOOPING=y
+-- 
+2.17.1
+

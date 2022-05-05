@@ -1,0 +1,37 @@
+From ef2d3578cf48da39a928af63ef2bcf8a8cb1086e Mon Sep 17 00:00:00 2001
+From: Matthias Schiffer <mschiffer@universe-factory.net>
+Date: Wed, 15 Dec 2021 20:59:26 +0100
+Subject: [PATCH] Makefile: error earlier when site.mk is missing
+
+The site.mk target was only evaluated after the whole makefile was
+parsed. This caused the GLUON_DEPRECATED error to be emitted first
+(hiding the more helpful message that no site config was found) on Gluon
+2021.1.x, where GLUON_DEPRECATED is used in a toplevel if in targets.mk.
+
+By moving the check from recipe context to the toplevel, we ensure that
+it is evaluated during parsing.
+
+(cherry picked from commit 286d07b35f7e23c7e4d67ee103a67154a96a95cc)
+---
+ Makefile | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 4ff9f0c6..76aa9cb2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -19,8 +19,9 @@ escape = '$(subst ','\'',$(1))'
+ GLUON_SITEDIR ?= site
+ $(eval $(call mkabspath,GLUON_SITEDIR))
+ 
+-$(GLUON_SITEDIR)/site.mk:
+-	$(error No site configuration was found. Please check out a site configuration to $(GLUON_SITEDIR))
++ifeq ($(realpath $(GLUON_SITEDIR)/site.mk),)
++$(error No site configuration was found. Please check out a site configuration to $(GLUON_SITEDIR))
++endif
+ 
+ include $(GLUON_SITEDIR)/site.mk
+ 
+-- 
+2.17.1
+

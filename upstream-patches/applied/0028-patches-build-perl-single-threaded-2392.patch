@@ -1,0 +1,46 @@
+From ff4050d8732b6ad0013b2c65bf5a4902c2c1d69a Mon Sep 17 00:00:00 2001
+From: Martin Weinelt <mweinelt@users.noreply.github.com>
+Date: Fri, 11 Feb 2022 21:40:22 +0100
+Subject: [PATCH] patches: build perl single-threaded (#2392)
+
+Prevents spurious build failures.
+
+(cherry picked from commit 545d1cbb11c297d86cf305856c91bfbb5ed6da81)
+---
+ ...t-build-in-parallel-and-bump-release.patch | 24 +++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+ create mode 100644 patches/packages/packages/0003-perl-don-t-build-in-parallel-and-bump-release.patch
+
+diff --git a/patches/packages/packages/0003-perl-don-t-build-in-parallel-and-bump-release.patch b/patches/packages/packages/0003-perl-don-t-build-in-parallel-and-bump-release.patch
+new file mode 100644
+index 00000000..b8fe11d2
+--- /dev/null
++++ b/patches/packages/packages/0003-perl-don-t-build-in-parallel-and-bump-release.patch
+@@ -0,0 +1,24 @@
++From: Martin Weinelt <martin@darmstadt.freifunk.net>
++Date: Tue, 8 Feb 2022 21:09:20 +0100
++Subject: perl: don't build in parallel and bump release
++
++Parallel builds cause spurious build failures with high core counts.
++
++https://github.com/openwrt/packages/issues/8238
++https://github.com/openwrt/packages/pull/17274
++
++diff --git a/lang/perl/Makefile b/lang/perl/Makefile
++index 84d256d2d8c682f18670a4cbae0a48e3333fb222..c2e5cf8e703af675dd296704597934aa9b5f7446 100644
++--- a/lang/perl/Makefile
+++++ b/lang/perl/Makefile
++@@ -34,8 +34,8 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/perl/$(PKG_NAME)-$(PKG_VERSION)
++ HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/perl/$(PKG_NAME)-$(PKG_VERSION)
++ PKG_INSTALL:=1
++ PKG_BUILD_DEPENDS:=perl/host
++-PKG_BUILD_PARALLEL:=1
++-HOST_BUILD_PARALLEL:=1
+++PKG_BUILD_PARALLEL:=0
+++HOST_BUILD_PARALLEL:=0
++ 
++ # Variables used during configuration/build
++ HOST_PERL_PREFIX:=$(STAGING_DIR_HOSTPKG)/usr
+-- 
+2.17.1
+

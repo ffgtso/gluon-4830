@@ -1,0 +1,40 @@
+From 48d5e38c3107343ce83875f5e22cd5ce58a9b9b8 Mon Sep 17 00:00:00 2001
+From: David Bauer <mail@david-bauer.net>
+Date: Sat, 14 Aug 2021 19:55:25 +0200
+Subject: [PATCH] modules: update OpenWrt
+
+7378c94927 kernel: bump to 4.14.243
+cfc1602a1e OpenWrt v19.07.8: revert to branch defaults
+31f2f76cd5 OpenWrt v19.07.8: adjust config defaults
+ef56c85848 ubus: update to version 2021-07-01
+796bf50e8e ubus: update to version 2021-06-03
+92e341d632 ubus: backport SOVERSION support
+e902d11de9 kernel: bump 4.14 to 4.14.241
+ceb8821a3d ath10k-ct: add security fixes
+71fa524e1b base-files: fix /tmp/TZ when zoneinfo not installed
+c88bdb8294 base-files: fix zoneinfo support
+15612706c9 mac80211: distance config: allow "auto" as a value
+ec76c365c1 gitignore: add .ccache folder
+bdd7faca8d kernel: bump 4.14 to 4.14.236
+
+Signed-off-by: David Bauer <mail@david-bauer.net>
+---
+ modules | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules b/modules
+index 21929b6e..2424122d 100644
+--- a/modules
++++ b/modules
+@@ -2,7 +2,7 @@ GLUON_FEEDS='packages routing gluon'
+ 
+ OPENWRT_REPO=https://github.com/openwrt/openwrt.git
+ OPENWRT_BRANCH=openwrt-19.07
+-OPENWRT_COMMIT=ffd4452f8b241d1d5b5ea8a56206f51702bbd6c5
++OPENWRT_COMMIT=7378c949270067d0a633cfd892b9dd6416581afa
+ 
+ PACKAGES_PACKAGES_REPO=https://github.com/openwrt/packages.git
+ PACKAGES_PACKAGES_BRANCH=openwrt-19.07
+-- 
+2.17.1
+

@@ -1,0 +1,39 @@
+From 107ffe6d3b7eaa9256a42b3ff589d3ddd569349d Mon Sep 17 00:00:00 2001
+From: Matthias Schiffer <mschiffer@universe-factory.net>
+Date: Tue, 25 Jan 2022 22:14:28 +0100
+Subject: [PATCH] workflows: lint: switch from `apt` to `apt-get -y`, add
+ update
+
+Using apt in scripts is discouraged. Also add an update to hopefully fix
+the lua-check installation failure in CI.
+
+(cherry picked from commit c75d90d9abc61fbe449897411c7d3e5792f7a2c9)
+---
+ .github/workflows/lint.yml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/.github/workflows/lint.yml b/.github/workflows/lint.yml
+index d079b235..a41e1dbc 100644
+--- a/.github/workflows/lint.yml
++++ b/.github/workflows/lint.yml
+@@ -10,7 +10,7 @@ jobs:
+     steps:
+       - uses: actions/checkout@v1
+       - name: Install Dependencies
+-        run: sudo apt install lua-check
++        run: sudo apt-get -y update && sudo apt-get -y install lua-check
+       - name: Install example site
+         run: ln -s ./docs/site-example ./site
+       - name: Lint Lua code
+@@ -22,7 +22,7 @@ jobs:
+     steps:
+       - uses: actions/checkout@v1
+       - name: Install Dependencies
+-        run: sudo apt install shellcheck
++        run: sudo apt-get -y update && sudo apt-get -y install shellcheck
+       - name: Install example site
+         run: ln -s ./docs/site-example ./site
+       - name: Lint shell code
+-- 
+2.17.1
+

@@ -1,0 +1,39 @@
+From 6ccad98fc0199a9477aaa3547c60189ef4396c03 Mon Sep 17 00:00:00 2001
+From: Matthias Schiffer <mschiffer@universe-factory.net>
+Date: Wed, 4 May 2022 20:08:04 +0200
+Subject: [PATCH] Update copyright years
+
+---
+ LICENSE      | 2 +-
+ docs/conf.py | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/LICENSE b/LICENSE
+index d6f40ac8..e134aa41 100644
+--- a/LICENSE
++++ b/LICENSE
+@@ -1,7 +1,7 @@
+ The code of Project Gluon may be distributed under the following terms, unless
+ noted otherwise in individual files or subtrees.
+ 
+-Copyright (c) 2013-2021, Project Gluon
++Copyright (c) 2013-2022, Project Gluon
+ All rights reserved.
+ 
+ Redistribution and use in source and binary forms, with or without
+diff --git a/docs/conf.py b/docs/conf.py
+index 82c556c9..75db04d7 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -20,7 +20,7 @@
+ # -- Project information -----------------------------------------------------
+ 
+ project = 'Gluon'
+-copyright = '2015-2021, Project Gluon'
++copyright = '2015-2022, Project Gluon'
+ author = 'Project Gluon'
+ 
+ # The short X.Y version
+-- 
+2.17.1
+

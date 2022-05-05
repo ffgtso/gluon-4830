@@ -1,0 +1,49 @@
+From 1e4cf25eb4ba565308ab49c4799852f812ebeb39 Mon Sep 17 00:00:00 2001
+From: Matthias Schiffer <mschiffer@universe-factory.net>
+Date: Sun, 13 Feb 2022 21:59:53 +0100
+Subject: [PATCH] gluon-web-osm: update OpenLayers default URL to 5.3.0
+
+The OpenLayers JS/CSS download URL is dead. Update it to make the map
+work again:
+
+- Update from OpenLayers 5.2.0 to 5.3.0
+- Switch from the obsolete rawgit.com URL to jsdelivr.net (rawgit.com
+  was only redirecting to jsdelivr.net for the last few years anyways)
+- Set a fixed commit in the URL, so the URL doesn't become outdated again
+
+(cherry picked from commit 62b24ed7ce8c46232f5e99bf9e8b365a95805ef1)
+---
+ docs/user/site.rst                                             | 2 +-
+ .../gluon-web-osm/luasrc/usr/lib/lua/gluon/web/model/osm.lua   | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/docs/user/site.rst b/docs/user/site.rst
+index 408cf455..31fb2653 100644
+--- a/docs/user/site.rst
++++ b/docs/user/site.rst
+@@ -478,7 +478,7 @@ config_mode \: optional
+ 
+     *openlayers_url* allows to override the base URL of the
+     *build/ol.js* and *css/ol.css* files (the default is
+-    ``https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0``).
++    ``https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@35ffe7626ce16c372143f3c903950750075e7068/en/v5.3.0``).
+     It is also possible to replace the default tile layer (which is OpenStreetMap)
+     with a custom one using the *tile_layer* section. Only XYZ layers are supported
+     at this point.
+diff --git a/package/gluon-web-osm/luasrc/usr/lib/lua/gluon/web/model/osm.lua b/package/gluon-web-osm/luasrc/usr/lib/lua/gluon/web/model/osm.lua
+index ec18a003..294caddf 100644
+--- a/package/gluon-web-osm/luasrc/usr/lib/lua/gluon/web/model/osm.lua
++++ b/package/gluon-web-osm/luasrc/usr/lib/lua/gluon/web/model/osm.lua
+@@ -4,7 +4,8 @@ local util = require "gluon.web.util"
+ local class = util.class
+ 
+ 
+-local DEFAULT_URL = 'https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0'
++local DEFAULT_URL =
++	'https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@35ffe7626ce16c372143f3c903950750075e7068/en/v5.3.0'
+ 
+ 
+ local M = {}
+-- 
+2.17.1
+

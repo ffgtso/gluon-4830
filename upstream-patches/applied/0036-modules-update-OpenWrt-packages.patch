@@ -1,0 +1,181 @@
+From 48f6a11e333dbe947cb6fe3d49c3c7c28ecd251e Mon Sep 17 00:00:00 2001
+From: Matthias Schiffer <mschiffer@universe-factory.net>
+Date: Wed, 23 Feb 2022 23:39:58 +0100
+Subject: [PATCH] modules: update OpenWrt packages
+
+5a842639dc87 nano: provide nano-full with most features enabled
+165c5625a3c6 netatalk: update to version 3.1.13
+7b9c8fd48743 coova-chilli: add dependency for miniportal
+6732d0573d62 coova-chilli: clean up Makefile
+6ac4167c7318 coova-chilli: remove dnslog option
+384c9dc68fed coova-chili: Fix version
+944bae08d00c coova-chilli: Update to 1.5
+3398ed29b0c0 python3: Update to 3.7.13, refresh patches
+e8dc42753c64 bind: bump to 9.16.27
+17e7ca6e2e66 syslog-ng: update to version 3.36.1
+79db9a8e246e expat: import patches for CVEs
+448eb6e4b999 expat: update to 2.2.10
+31098bd6b274 htpdate: drop www.freebsd.org from default server list
+4c461f9e8559 nano: update to 6.2
+8129d30e3653 nano: update to 6.1
+e234ea1ae48b ruby: update to 2.6.9
+c0c89af7c4fa bind: update to version 9.16.25
+56cf18027b67 CI: fix runtime testing for non master branch
+5578d60f9ad9 nano: Add a plus variant with more features
+864ffb6ca1b9 nss: backport patch for CVE-2021-43527
+0af741cd16ce prosody: update to version 0.11.13
+20e42ca81e02 prosody: fix shellcheck warnings
+0319712eda5e prosody: update to 0.11.7
+22a3a54a9c8a prosody: update to 0.11.5
+199860fa3ad3 prosody: /etc/prosody permissions fix
+498bcd4e25c7 prosody: Update to 0.11.3
+057803706e99 tvheadend: fix conffiles section
+765307772f15 domoticz: backport patch to fix compilation with uClibc-ng
+572392a8ac20 domoticz: bump to 4.10717
+8d91ba86a956 domoticz: Fix compilation without deprecated OpenSSL APIs
+7bb0a7e929cb netdata: Update init script to use -D rather than -nd
+6317eabad70e apache: security bump to 2.4.51
+4af8afe6ccde haveged: update to 1.9.17
+f299c29a45fc treewide: add missing BUILDONLY
+64d0238a1bef zsh: drop bash syntax in postinst
+ea3e54accd11 zsh: fix invalid postrm script and little refactor of scripts
+5a9b5ee78cd2 nano: update to version 6.0
+e1a2d908c3de msmtp: update to version 1.8.1.9
+535f4804b661 postgresql: security update to version 11.14
+e93fc5a20f57 libs/c-ares: fix domain hijacking CVE-2021-3672
+45218f20597b msmtp: update to version 1.8.17
+d216572bb147 syslog-ng: update to version 3.35.1
+1d5b64958b79 icu: Fix memory bug w/ baseName
+e1feccd5aeb7 ddns-scripts: Fix wrong whitespace in preinst and postinst scripts
+c559096e03e5 bind: update to version 9.16.23
+af8fe2363d07 cyrus-sasl: patch CVE-2019-19906
+903d79b3872b php7: Clean up and update distributed php.ini for php 7.2.34
+496f50a754cf syslog-ng: update to version 3.34.1
+61741b3249d6 ffmpeg: update to version 3.4.9 (security fix)
+9abe24fb49fa bind: Bump to 9.16.22
+cb4433c4baa1 tvheadend: update libhdhomerun
+18af9b9e2132 bind: update to version 9.16.21
+bb0ed00885eb nextdns: Update to version 1.37.3
+c493a603cdbf vpn-policy-routing: downgrade to 0.2.1-13
+20a9e8700b3d python-dateutil: Add missing HOST_PYTHON3_PACKAGE_BUILD_DEPENDS
+e933f6f749aa python-importlib-metadata: Pin setuptools-scm version
+a5de193e5422 simple-adblock: update to 1.8.8-1
+af3643f9b00d https-dns-proxy: update to 2021-09-27
+f2af6941fa2b tor: update to 0.4.5.10
+746fa830c6d7 python-zipp: pin setuptools-scm version
+70bb6f15e8df perl: perlmod.mk: use flock when hostpkg/perl used
+15305d2f2ee6 nano: update to 5.9
+ece1d7bfcebf haveged: update to 1.9.15
+2d35019d6bee lighttpd: update to lighttpd 1.4.55 release hash
+b101f744c258 tcpreplay: avoid host lib leakage
+be17f9726509 tcpreplay: bump to version 4.3.4
+6e4e0d5e9dfd tcpreplay: add libdnet support
+e7167f4702b5 tcpreplay: fix compilation with Arch Linux
+668aa95dfb15 tcpreplay: bump to version 4.3.3
+6dc494fddf3b ntfs-3g: patch CVE-2019-9755
+02ce5303d5a8 nextdns: Update to version 1.37.2
+7a7b8a257b59 bind: update to version 9.16.20
+d8ef698a9fc9 cgi-io: update to latest Git HEAD
+6c5169b3956b cgi-io: update to version 2020-10-27
+daaacfd24e74 cgi-io: move into out of tree project
+d5a7aa18618c haproxy: Update HAProxy to v2.0.25
+17f5a0cc8362 python3: update to version 3.7.12
+dd6be653dd8b tor: update to version 0.4.4.9
+508c15acb77a irssi: update to 1.2.3
+93cfd1679a6f nextdns: Update to version 1.37.1
+6f3cd160d273 nextdns: Update to version 1.37.0
+72f35e712e9f acme: Fix uhttpd restart to load new certificates
+684b71f0cddc click: update to version 7.0
+5bd73795e8fc dnsdist: fix default SSL lib spelling
+1dd040f9ca89 treewide: Remove GO_PKG_LDFLAGS for stripping binaries
+82a3613ec8ad nginx: add PROVIDES nginx-ssl to nginx-all-module
+b35c3984e1fd Revert "net/miniupnpd: ext_ip_reserved_ignore support"
+72d806d18145 apr: patch CVE-2021-35940
+9d3ad065b294 nextdns: Update to version 1.36.0
+4b091361ef48 postgresql: disable PIC
+0573fb59ab33 file: update to 5.38
+b03fe54e0e98 https-dns-proxy: patch CMakeList.txt to use OpenWrt CFLAGS
+8ff2671b222e tar: fix CVE-2021-20193
+3862bb3e6d65 mc: add a missing Syntax file
+47e2ef579e90 git: update to 2.26.3
+b39f185bdf90 mc: update to 2.8.27
+865ae46492ab unixodbc: use 'install' when copying host binaries
+67f403b5e6af perl: perlmod.mk: use 'install' for host binaries
+5051c4bb0074 knot: update to version 3.0.8
+e0f5b4e2891d knot: update to version 3.0.7
+de894d37a666 knot: update to version 3.0.6
+0c3d97bf5725 knot: update to version 3.0.5
+210e3d9167be https-dns-proxy: update to 2021-07-29-01
+a0e39ca02c57 nextdns: Update to version 1.35.0
+92abb9917028 adblock: bugfix 4.0.7-9
+0872827d2dee librouteros: don't build docs
+f31271fed30f net/snort3: Include default configs and snort2lua
+de84e781e5b6 syslog-ng: update to version 3.33.2
+242dbcebafb9 yggdrasil: bump to 0.4.0
+df79c0614cbd vpnbypass: updates to 1.3.2-1
+f795536f4884 ruby: update to 2.6.8
+a673a232686b addrwatch: Various fixes
+1f9aa31eab77 addrwatch: fix broken conffiles
+531d59dbc733 addrwatch: update to 1.0.2
+ce1781155dfd addrwatch: Add missing limits header for PATH_MAX
+879838998e13 luajit: for powerpc, add FPU dependency
+be2f1b2c0041 luajit: fix compilation with host clang
+29c5a802c4d8 [LuaJIT] Allow MIPS64 support
+e5e5c889196b luajit: do not install static libraries to InstallDev
+dd627367847d luajit: use dynamic buildmode
+192aea109ad6 yggdrasil: allow HTTPS connections
+7248e1b957a5 yggdrasil: bump to 0.3.16
+fe9b2579f984 yggdrasil: bump to 0.3.15
+8687d79f8478 yggdrasil: Ygg-over-ygg bugfix
+35531bcb26a0 yggdrasil: bump to 0.3.14
+3232f272430a yggdrasil: bump to 0.3.13
+2136fafe397d yggdrasil: bump to 0.3.12
+05816dbfd83c yggdrasil: Change package configuration to UCI
+325bf6bc7540 yggdrasil: fixes build name and version #10309
+7087b16140da yggdrasil: uci firewall Section name and cover both IP versions - rename the section instance to yggdrasil (feat. request) - allow zone to cover both ip4 and ip6 fam
+56b6518c8898 yggdrasil: bump to 0.3.11
+b83f6f9af340 syslog-ng: disable mqtt
+c0e93ddff35e libuv: fix CVE-2021-22918
+39a92140d19a syslog-ng: update to version 3.33.1
+dd32c2cbeeef czmq: disable nss
+b7d2b9163cf6 apache: update to 2.4.48
+a16402770c32 czmq: update to version 4.2.1
+1cd6a5f01992 bind: update to version 9.16.18
+b86ca1563ba3 lxc: add patch to switch GPG server
+dc621a9b195f snort3: Backport stable version from 21.02
+5d189c1013a6 libdaq3: New package, dependency of snort3
+d6b64bb65368 msmtp: update to version 1.8.15
+a2ab06243970 youtube-dl: update to version 2021.4.7
+118b0cb9d608 youtube-dl: update to version 2021.2.10
+b18aab0d13f9 python3: update to version 3.7.11
+9bcac7859a80 nextdns: Update to version 1.34.2
+2294d252b3ef ddns-scripts: standardize required params declaration
+730e14da79f6 python-dateutil: pin setuptools-scm version to 5.0.2
+d1aac139a698 Revert "python-dateutil: disable setuptools-scm for build"
+29da5d65b6dc python-dateutil: disable setuptools-scm for build
+b955b6943504 nextdns: Update to version 1.33.11
+0f5fbe1f5bfd nano: update to 5.8
+ce1ae404c3a6 net/mosquitto: Update to 1.6.15
+9355f9503d17 ksmbd: update to 3.3.7
+2c328f3d8abd ksmbd: update to 3.3.6
+08d1a66e3d9f ksmbd: update to 3.3.5
+---
+ modules | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules b/modules
+index 22c0e171..3885408a 100644
+--- a/modules
++++ b/modules
+@@ -6,7 +6,7 @@ OPENWRT_COMMIT=b24905c38a8acc337a08c116b343b6ccc3ba861e
+ 
+ PACKAGES_PACKAGES_REPO=https://github.com/openwrt/packages.git
+ PACKAGES_PACKAGES_BRANCH=openwrt-19.07
+-PACKAGES_PACKAGES_COMMIT=476b8b82bb7447a1ed847c96d85de567e09cdb62
++PACKAGES_PACKAGES_COMMIT=5a842639dc87dab9daab34c064f6c8e268a34ba8
+ 
+ PACKAGES_ROUTING_REPO=https://github.com/openwrt/routing.git
+ PACKAGES_ROUTING_BRANCH=openwrt-19.07
+-- 
+2.17.1
+

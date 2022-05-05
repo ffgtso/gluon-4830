@@ -1,0 +1,81 @@
+From ae1023ac3a188881add916c756df1695737bc664 Mon Sep 17 00:00:00 2001
+From: Matthias Schiffer <mschiffer@universe-factory.net>
+Date: Wed, 15 Dec 2021 19:46:26 +0100
+Subject: [PATCH] gluon-status-page: use UCI + iwinfo to get channel
+ information
+
+The network.wireless status ubus call only returns the configured
+channel from UCI, breaking the status page in outdoor mode, where the
+configuration contains 'auto' instead of a number.
+
+Fixes: 0d3fa6b59be7 ("gluon-status-page: use ubus to get radio channels")
+Closes #2336
+
+(cherry picked from commit 201e1597b122fbb343516b97a6baa2ed1e015f22)
+---
+ .../gluon/status-page/view/status-page.html   | 23 +++++++++++--------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
+
+diff --git a/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html b/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html
+index bdce64fb..73029d1d 100644
+--- a/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html
++++ b/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html
+@@ -1,7 +1,11 @@
+ <%-
++	local iwinfo = require 'iwinfo'
+ 	local ubus = require 'ubus'
+ 	local unistd = require 'posix.unistd'
+ 	local util = require 'gluon.util'
++	local wireless = require 'gluon.wireless'
++
++	local uci = require('simple-uci').cursor()
+ 
+ 	local translations = {}
+ 	local site_i18n = i18n 'gluon-site'
+@@ -35,22 +39,22 @@
+ 		return interfaces
+ 	end
+ 
+-	local function get_radios(uconn)
+-		local radios = uconn:call("network.wireless", "status", {})
++	local function get_radios()
+ 		local ret = {}
+ 
+-		for radio, info in pairs(radios) do
+-			if info.up then
++		wireless.foreach_radio(uci, function(radio)
++			local channel = iwinfo.nl80211.channel(wireless.find_phy(radio))
++			if channel then
+ 				table.insert(ret, {
+-					name = radio,
+-					channel = info.config.channel,
++					name = radio['.name'],
++					channel = channel,
+ 				})
+ 			end
+-		end
+-
++		end)
+ 		table.sort(ret, function(a, b)
+ 			return a.name < b.name
+ 		end)
++
+ 		return ret
+ 	end
+ 
+@@ -72,10 +76,11 @@
+ 	end
+ 
+ 	local interfaces = get_interfaces(uconn)
+-	local radios = get_radios(uconn)
+ 
+ 	ubus.close(uconn)
+ 
++	local radios = get_radios()
++
+ 	local function sorted(t)
+ 		t = {unpack(t)}
+ 		table.sort(t)
+-- 
+2.17.1
+

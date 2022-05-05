@@ -1,0 +1,32 @@
+From 64bf4d1b53723b2f4a44a369bbb6d58e1cc76b91 Mon Sep 17 00:00:00 2001
+From: Igor Scheller <igor.scheller@igorshp.de>
+Date: Sun, 20 Feb 2022 11:51:58 +0100
+Subject: [PATCH] gluon-web-osm: Fix " rendering in attribution with CDATA tag
+ (#2398)
+
+(cherry picked from commit bbc00017a922fc691297c3ca1263cb7057f63e24)
+---
+ .../gluon-web-osm/files/lib/gluon/web/view/model/osm/map.html   | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/package/gluon-web-osm/files/lib/gluon/web/view/model/osm/map.html b/package/gluon-web-osm/files/lib/gluon/web/view/model/osm/map.html
+index 2caa3f37..a2822cd4 100644
+--- a/package/gluon-web-osm/files/lib/gluon/web/view/model/osm/map.html
++++ b/package/gluon-web-osm/files/lib/gluon/web/view/model/osm/map.html
+@@ -1,6 +1,7 @@
+ <div id="<%=id%>" class="gluon-osm-map" style="display: none"></div>
+ <script type="text/javascript" src="/static/gluon-web-osm.js"></script>
+ <script type="text/javascript">
++	//<![CDATA[
+ 	(function() {
+ 		var elMap = document.getElementById(<%=json(id)%>);
+ 		var wrapper = elMap.parentNode;
+@@ -41,4 +42,5 @@
+ 			});
+ 		});
+ 	})();
++	//]]>
+ </script>
+-- 
+2.17.1
+

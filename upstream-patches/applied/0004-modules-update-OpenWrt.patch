@@ -1,0 +1,30 @@
+From 0622764ed123beb7cee8e06ed49d20afd6d906be Mon Sep 17 00:00:00 2001
+From: David Bauer <mail@david-bauer.net>
+Date: Thu, 2 Sep 2021 22:34:13 +0200
+Subject: [PATCH] modules: update OpenWrt
+
+9882a54c48 kernel: bump 4.14 to 4.14.245
+fdea0036a2 openssl: bump to 1.1.1l
+40c03b101c openssl: use --cross-compile-prefix in Configure
+
+Signed-off-by: David Bauer <mail@david-bauer.net>
+---
+ modules | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules b/modules
+index 65e3bb23..fc16ae8a 100644
+--- a/modules
++++ b/modules
+@@ -2,7 +2,7 @@ GLUON_FEEDS='packages routing gluon'
+ 
+ OPENWRT_REPO=https://github.com/openwrt/openwrt.git
+ OPENWRT_BRANCH=openwrt-19.07
+-OPENWRT_COMMIT=9d082556fecfe2e971f964ebcd6b13fe30d208af
++OPENWRT_COMMIT=9882a54c4848e2e282bca435c6aa0025d9fa37df
+ 
+ PACKAGES_PACKAGES_REPO=https://github.com/openwrt/packages.git
+ PACKAGES_PACKAGES_BRANCH=openwrt-19.07
+-- 
+2.17.1
+

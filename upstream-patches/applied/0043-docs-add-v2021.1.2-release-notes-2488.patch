@@ -1,0 +1,141 @@
+From 422e20c8daaee36af2707813081a22f6a2a302c1 Mon Sep 17 00:00:00 2001
+From: Matthias Schiffer <mschiffer@universe-factory.net>
+Date: Mon, 2 May 2022 23:37:48 +0200
+Subject: [PATCH] docs: add v2021.1.2 release notes (#2488)
+
+---
+ docs/releases/index.rst     |   1 +
+ docs/releases/v2021.1.2.rst | 109 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 110 insertions(+)
+ create mode 100644 docs/releases/v2021.1.2.rst
+
+diff --git a/docs/releases/index.rst b/docs/releases/index.rst
+index ddda8511..d1142e2b 100644
+--- a/docs/releases/index.rst
++++ b/docs/releases/index.rst
+@@ -5,6 +5,7 @@ Release Notes
+    :caption: Gluon 2021.1
+    :maxdepth: 2
+ 
++   v2021.1.2
+    v2021.1.1
+    v2021.1
+ 
+diff --git a/docs/releases/v2021.1.2.rst b/docs/releases/v2021.1.2.rst
+new file mode 100644
+index 00000000..01122fa7
+--- /dev/null
++++ b/docs/releases/v2021.1.2.rst
+@@ -0,0 +1,109 @@
++Gluon 2021.1.2 (unreleased)
++===========================
++
++Important notes
++---------------
++
++Upgrades to v2021.1 and later releases are only supported from releases v2018.2
++and later. Migration code for upgrades from older versions has been removed to
++simplify maintenance.
++
++
++Updates
++-------
++
++- The Linux kernel was updated to version 4.14.275
++- The mac80211 wireless driver stack was updated to a version based on kernel
++  4.19.237
++
++Various minor package updates are not listed here and can be found in the commit
++log.
++
++
++Bugfixes
++--------
++
++* **[SECURITY]** This release will fix a critical security vulnerability
++
++  This bugfix has not been pushed to the public Gluon repository yet to avoid
++  disclosing information on the issue. A detailed advisory will be published at
++  the same time as the Gluon release.
++
++* **[SECURITY]** Config Mode: Prevent Cross-Site Request Forgery (CSRF)
++
++  The Config Mode was not validating the *Origin* header of POST requests.
++  This allowed arbitrary websites to modify   configuration (including SSH keys)
++  on a Gluon node in Config Mode reachable from a user's browser by sending POST
++  requests with form data to 192.168.1.1.
++
++  The impact of this issue is considered low, as nodes are only vulnerable while
++  in Config Mode.
++
++* Config Mode: Fix occasionally hanging page load after submitting the
++  configuration wizard causing the reboot message and VPN key not to be
++  displayed
++
++* Config Mode (OSM): Update default OpenLayers source URL
++
++  The OSM feature of the Config Mode was broken when the default source URL was
++  used for OpenLayers, as the old URL has become unavailable. The default was
++  updated to a URL that should not become unavailable again.
++
++* Config Mode (OSM): Fix error when using ``"`` character in attribution text
++
++* respondd-module-airtime: Fix respondd crash on devices with disabled WLAN
++  interfaces
++
++  Several improvements were made to the error handling of the
++  *respondd-module-airtime* package. The "PHY ID" field (introduced in Gluon
++  2021.1) was removed again.
++
++* ipq40xx: Fix bad WLAN performance on Plasma Cloud PA1200 and PA2200 devices
++
++* Fix occasional build failure in "perl" package with high number of threads
++  (``-j32`` or higher)
++
++
++Other improvements
++------------------
++
++* Several improvements were made to the status page:
++
++  - WLAN channel display does not require the *respondd-module-airtime* package
++    anymore
++  - The "gateway nexthop" label now links to the status page of the nexthop node
++  - The timeout to retrieve information from neighbour nodes was increased,
++    making the display of the name
++    of overloaded, slow or otherwise badly reachable nodes more likely to
++    succeed
++
++
++Known issues
++------------
++
++* Upgrading EdgeRouter-X from versions before v2020.1.x may lead to a
++  soft-bricked state due to bad blocks on the NAND flash which the NAND driver
++  before this release does not handle well.
++  (`#1937 <https://github.com/freifunk-gluon/gluon/issues/1937>`_)
++
++* The integration of the BATMAN_V routing algorithm is incomplete.
++
++  - Mesh neighbors don't appear on the status page.
++    (`#1726 <https://github.com/freifunk-gluon/gluon/issues/1726>`_)
++    Many tools have the BATMAN_IV metric hardcoded, these need to be updated to
++    account for the new throughput metric.
++  - Throughput values are not correctly acquired for different interface types.
++    (`#1728 <https://github.com/freifunk-gluon/gluon/issues/1728>`_)
++    This affects virtual interface types like bridges and VXLAN.
++
++* Default TX power on many Ubiquiti devices is too high, correct offsets are
++  unknown (`#94 <https://github.com/freifunk-gluon/gluon/issues/94>`_)
++
++  Reducing the TX power in the Advanced Settings is recommended.
++
++* In configurations without VXLAN, the MAC address of the WAN interface is
++  modified even when Mesh-on-WAN is disabled
++  (`#496 <https://github.com/freifunk-gluon/gluon/issues/496>`_)
++
++  This may lead to issues in environments where a fixed MAC address is expected
++  (like VMware when promiscuous mode is disallowed).
+-- 
+2.17.1
+

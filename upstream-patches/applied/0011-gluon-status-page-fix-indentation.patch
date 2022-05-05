@@ -1,0 +1,26 @@
+From b03e1e280e2b128c9149010d3f07bc81c688078d Mon Sep 17 00:00:00 2001
+From: Matthias Schiffer <mschiffer@universe-factory.net>
+Date: Sat, 7 Aug 2021 20:52:59 +0200
+Subject: [PATCH] gluon-status-page: fix indentation
+
+(cherry picked from commit dcb8738a5a4de6631d037cb300c2024b95c78ecf)
+---
+ .../files/lib/gluon/status-page/view/status-page.html           | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html b/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html
+index 861c13a4..b7698f4c 100644
+--- a/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html
++++ b/package/gluon-status-page/files/lib/gluon/status-page/view/status-page.html
+@@ -190,7 +190,7 @@
+ 					<tr><th><%:Wireless 2.4 GHz%></th><td><%= statistics('clients/wifi24') %></td></tr>
+ 					<tr><th><%:Wireless 5 GHz%></th><td><%= statistics('clients/wifi5') %></td></tr>
+ 				</table>
+-					<div id="radios" style="display: none">
++				<div id="radios" style="display: none">
+ 					<h3><%:Radios%></h3>
+ 					<table id="radio-devices">
+ 					</table>
+-- 
+2.17.1
+

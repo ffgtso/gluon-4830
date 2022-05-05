@@ -1,0 +1,68 @@
+From d4cb17777ba4fec15811c56ad3febc4fc648c3ff Mon Sep 17 00:00:00 2001
+From: Sven Eckelmann <sven@narfation.org>
+Date: Fri, 17 Sep 2021 21:00:29 +0200
+Subject: [PATCH] ipq40xx: Fix automatic ipq-wifi selection for Plasma Cloud
+ devices (#2314)
+
+It was noticed that various devices had not the correct board-2.bin
+installed. This was caused by a typo in the package name. The ath10k driver
+(unfortunately) is then loading a completely unrelated BDF from the
+ath10k-board-qca4019 board-2.bin. It is usually a rather bad idea to use
+calibration data from a different board - but the effects depend on the
+actual device.
+
+For the PA1200, it was mostly noticed by the bad 2.4GHz performance.
+
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+---
+ .../0020-ipq40xx-add-support-for-Plasma-Cloud-PA1200.patch    | 4 ++--
+ .../0021-ipq40xx-add-support-for-Plasma-Cloud-PA2200.patch    | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/patches/openwrt/0020-ipq40xx-add-support-for-Plasma-Cloud-PA1200.patch b/patches/openwrt/0020-ipq40xx-add-support-for-Plasma-Cloud-PA1200.patch
+index aec18d51..0372f409 100644
+--- a/patches/openwrt/0020-ipq40xx-add-support-for-Plasma-Cloud-PA1200.patch
++++ b/patches/openwrt/0020-ipq40xx-add-support-for-Plasma-Cloud-PA1200.patch
+@@ -429,7 +429,7 @@ index 0000000000000000000000000000000000000000..bcb9552ce777d1d522c7642649e22ec2
+ +	qcom,ath10k-calibration-variant = "PlasmaCloud-PA1200";
+ +};
+ diff --git a/target/linux/ipq40xx/image/Makefile b/target/linux/ipq40xx/image/Makefile
+-index 68dcbc59a42f6d8360b87c7b4e74cd34f697b465..e14d00ad08b8caf2dae935d573f0ba7bb0433c23 100644
++index 68dcbc59a42f6d8360b87c7b4e74cd34f697b465..3a2e7a4410afcba1a1369cac328e237fc350668b 100644
+ --- a/target/linux/ipq40xx/image/Makefile
+ +++ b/target/linux/ipq40xx/image/Makefile
+ @@ -345,6 +345,21 @@ endef
+@@ -447,7 +447,7 @@ index 68dcbc59a42f6d8360b87c7b4e74cd34f697b465..e14d00ad08b8caf2dae935d573f0ba7b
+ +	IMAGES = factory.bin sysupgrade.bin
+ +	IMAGE/factory.bin := append-rootfs | pad-rootfs | openmesh-image ce_type=PA1200
+ +	IMAGE/sysupgrade.bin/squashfs := append-rootfs | pad-rootfs | sysupgrade-tar rootfs=$$$$@ | append-metadata
+-+	DEVICE_PACKAGES := uboot-envtools ipq-wifi-plasmacloud-pa1200
+++	DEVICE_PACKAGES := uboot-envtools ipq-wifi-plasmacloud_pa1200
+ +endef
+ +TARGET_DEVICES += plasmacloud_pa1200
+ +
+diff --git a/patches/openwrt/0021-ipq40xx-add-support-for-Plasma-Cloud-PA2200.patch b/patches/openwrt/0021-ipq40xx-add-support-for-Plasma-Cloud-PA2200.patch
+index b588f083..d4f58012 100644
+--- a/patches/openwrt/0021-ipq40xx-add-support-for-Plasma-Cloud-PA2200.patch
++++ b/patches/openwrt/0021-ipq40xx-add-support-for-Plasma-Cloud-PA2200.patch
+@@ -501,7 +501,7 @@ index 0000000000000000000000000000000000000000..2d0655114b4e0749e0c878a3d16ece2a
+ +	ieee80211-freq-limit = <5470000 5875000>;
+ +};
+ diff --git a/target/linux/ipq40xx/image/Makefile b/target/linux/ipq40xx/image/Makefile
+-index e14d00ad08b8caf2dae935d573f0ba7bb0433c23..9872d0c4abcbb9d607bb15c47f0f820e7cdea077 100644
++index 3a2e7a4410afcba1a1369cac328e237fc350668b..b6241d622574657b5261a45507ba5959d39eaa67 100644
+ --- a/target/linux/ipq40xx/image/Makefile
+ +++ b/target/linux/ipq40xx/image/Makefile
+ @@ -360,6 +360,21 @@ define Device/plasmacloud_pa1200
+@@ -519,7 +519,7 @@ index e14d00ad08b8caf2dae935d573f0ba7bb0433c23..9872d0c4abcbb9d607bb15c47f0f820e
+ +	IMAGES = factory.bin sysupgrade.bin
+ +	IMAGE/factory.bin := append-rootfs | pad-rootfs | openmesh-image ce_type=PA2200
+ +	IMAGE/sysupgrade.bin/squashfs := append-rootfs | pad-rootfs | sysupgrade-tar rootfs=$$$$@ | append-metadata
+-+	DEVICE_PACKAGES := ath10k-firmware-qca9888-ct ipq-wifi-plasmacloud-pa2200 uboot-envtools
+++	DEVICE_PACKAGES := ath10k-firmware-qca9888-ct ipq-wifi-plasmacloud_pa2200 uboot-envtools
+ +endef
+ +TARGET_DEVICES += plasmacloud_pa2200
+ +
+-- 
+2.17.1
+

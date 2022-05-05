@@ -1,0 +1,29 @@
+From 46dce5747b895b47313545aad70956d984811873 Mon Sep 17 00:00:00 2001
+From: Matthias Schiffer <mschiffer@universe-factory.net>
+Date: Tue, 1 Feb 2022 23:26:30 +0100
+Subject: [PATCH] gluon-web: add CRLF to text/plain Internal Server Error
+ output
+
+Having a trailing newline is nice when viewing the returned data in a
+terminal.
+
+(cherry picked from commit de43b306d4423e828c34a2eac642b57fdbcd8561)
+---
+ package/gluon-web/luasrc/usr/lib/lua/gluon/web/dispatcher.lua | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/package/gluon-web/luasrc/usr/lib/lua/gluon/web/dispatcher.lua b/package/gluon-web/luasrc/usr/lib/lua/gluon/web/dispatcher.lua
+index 2d727776..617b17a7 100644
+--- a/package/gluon-web/luasrc/usr/lib/lua/gluon/web/dispatcher.lua
++++ b/package/gluon-web/luasrc/usr/lib/lua/gluon/web/dispatcher.lua
+@@ -208,6 +208,6 @@ return function(config, http)
+ 	if not ok then
+ 		http:status(500, "Internal Server Error")
+ 		http:prepare_content("text/plain")
+-		http:write(err)
++		http:write(err .. "\r\n")
+ 	end
+ end
+-- 
+2.17.1
+

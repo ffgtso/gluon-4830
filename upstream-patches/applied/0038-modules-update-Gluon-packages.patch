@@ -1,0 +1,23 @@
+From 4aa73858a286b6aff41e900a931436b5ff74736d Mon Sep 17 00:00:00 2001
+From: Matthias Schiffer <mschiffer@universe-factory.net>
+Date: Wed, 23 Feb 2022 23:41:41 +0100
+Subject: [PATCH] modules: update Gluon packages
+
+f9ef3fc7d9d7 treewide: change Github URLs from git:// to https:// (#252)
+---
+ modules | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules b/modules
+index 211e5e76..d068375c 100644
+--- a/modules
++++ b/modules
+@@ -14,4 +14,4 @@ PACKAGES_ROUTING_COMMIT=8f23999365de1bf2617e03d3f536e4542258d985
+ 
+ PACKAGES_GLUON_REPO=https://github.com/freifunk-gluon/packages.git
+ PACKAGES_GLUON_BRANCH=v2021.1.x
+-PACKAGES_GLUON_COMMIT=015408e702a5843310e40c2ca664e1903b601204
++PACKAGES_GLUON_COMMIT=f9ef3fc7d9d7b270de893e80cf6fba916c06bf45
+-- 
+2.17.1
+
