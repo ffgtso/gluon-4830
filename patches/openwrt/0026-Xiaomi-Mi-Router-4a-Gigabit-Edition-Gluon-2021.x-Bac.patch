@@ -292,15 +292,6 @@ index b2c3d32c55..f689bfe9a3 100644
  }
  
  static const struct fe_work_t fe_work[] = {
-@@ -1635,7 +1638,7 @@ static int fe_probe(struct platform_device *pdev)
- 		priv->tx_ring.tx_ring_size *= 4;
- 		priv->rx_ring.rx_ring_size *= 4;
- 	}
--	netif_napi_add(netdev, &priv->rx_napi, fe_poll, napi_weight);
-+	netif_threaded_napi_add(netdev, &priv->rx_napi, fe_poll, napi_weight);
- 	fe_set_ethtool_ops(netdev);
- 
- 	err = register_netdev(netdev);
 diff --git a/target/linux/ramips/files-4.14/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/target/linux/ramips/files-4.14/drivers/net/ethernet/mediatek/mtk_eth_soc.h
 index 2f6fe1724c..a9e91b10a5 100644
 --- a/target/linux/ramips/files-4.14/drivers/net/ethernet/mediatek/mtk_eth_soc.h
