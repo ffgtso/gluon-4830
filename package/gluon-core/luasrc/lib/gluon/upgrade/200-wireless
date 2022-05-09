@@ -81,11 +81,13 @@ local function get_htmode(radio)
 		    config_htmode="VHT20"
 		    if site.wifi5.htmode ~= nil then
 		        config_htmode=site.wifi5.htmode
+		    end
 			uci:set('gluon', 'wireless', radio['.name'] .. '_htmode', config_htmode)
 		else
 		    config_htmode="HT20"
 		    if site.wifi2.htmode ~= nil then
 		        config_htmode=site.wifi2.htmode
+		    end
 			uci:set('gluon', 'wireless', radio['.name'] .. '_htmode', config_htmode)
 		end
 		uci:save('gluon')
