@@ -9,6 +9,7 @@ local uci = require("simple-uci").cursor()
 local hostname = pretty_hostname.get(uci)
 local contact = uci:get_first('gluon-node-info', 'owner', 'contact')
 
+local util = require "gluon.util"
 local ssid = site.wifi24.ap.ssid('4830.org')
 local core_domain = uci:get("gluon", "core", "domain") or "n/a"
 local communityname = string.gsub(util.exec(string.format("/lib/gluon/ffgt-geolocate/get_domain_name.sh %s", core_domain)),"\n", "") or "n/a"
