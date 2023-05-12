@@ -13,6 +13,7 @@ local util = require "gluon.util"
 local ssid = site.wifi24.ap.ssid('4830.org')
 local core_domain = uci:get("gluon", "core", "domain") or "n/a"
 local communityname = string.gsub(util.exec(string.format("/lib/gluon/ffgt-geolocate/get_domain_name.sh %s", core_domain)),"\n", "") or "n/a"
+local communitycontact = site.community_contact('info@4830.org')
 
 local msg = site_i18n._translate('gluon-config-mode:reboot')
 if not msg then return end
@@ -25,4 +26,5 @@ renderer.render_string(msg, {
 	ssid = ssid,
 	domain = core_domain,
 	community = communityname,
+	communitycontact= communitycontact,
 })
