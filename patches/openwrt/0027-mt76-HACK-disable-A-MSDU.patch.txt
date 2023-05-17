@@ -1,0 +1,40 @@
+From 634c78f0fdc84b82afa9cefa50123b39c35a4fb6 Mon Sep 17 00:00:00 2001
+From: Andre Heider <a.heider@gmail.com>
+Date: Wed, 12 May 2021 15:03:04 +0200
+Subject: [PATCH] mt76: HACK: disable A-MSDU
+
+---
+ .../patches/0001-HACK-disable-A-MSDU.patch    | 21 +++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+ create mode 100644 package/kernel/mt76/patches/0001-HACK-disable-A-MSDU.patch
+
+diff --git a/package/kernel/mt76/patches/0001-HACK-disable-A-MSDU.patch b/package/kernel/mt76/patches/0001-HACK-disable-A-MSDU.patch
+new file mode 100644
+index 0000000000..8acd492120
+--- /dev/null
++++ b/package/kernel/mt76/patches/0001-HACK-disable-A-MSDU.patch
+@@ -0,0 +1,21 @@
++From 9029f94ac758e3180afcb2ae59ba9e61bb6f3947 Mon Sep 17 00:00:00 2001
++From: Andre Heider <a.heider@gmail.com>
++Date: Wed, 12 May 2021 15:00:44 +0200
++Subject: [PATCH] HACK: disable A-MSDU
++
++https://github.com/openwrt/mt76/issues/450#issuecomment-735886705
++---
++ mac80211.c | 2 +-
++ 1 file changed, 1 insertion(+), 1 deletion(-)
++
++--- a/mac80211.c
+++++ b/mac80211.c
++@@ -304,7 +304,7 @@ mt76_phy_init(struct mt76_phy *phy, stru
++ 	ieee80211_hw_set(hw, SUPPORTS_RC_TABLE);
++ 	ieee80211_hw_set(hw, SUPPORT_FAST_XMIT);
++ 	ieee80211_hw_set(hw, SUPPORTS_CLONED_SKBS);
++-	ieee80211_hw_set(hw, SUPPORTS_AMSDU_IN_AMPDU);
+++	//ieee80211_hw_set(hw, SUPPORTS_AMSDU_IN_AMPDU);
++ 	ieee80211_hw_set(hw, SUPPORTS_REORDERING_BUFFER);
++ 
++ 	if (!(dev->drv->drv_flags & MT_DRV_AMSDU_OFFLOAD)) {
+-- 
+2.30.2
+
