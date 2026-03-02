@@ -6,4 +6,4 @@ config owner
 config system
 
 config contact
-        option usage-restriction 'Private data, do not disclose on a map or database unless authorized by 4830.org e. V. officials.'
+        option usage_restriction 'Private data, do not disclose on a map or database unless authorized by 4830.org e. V. officials.'
