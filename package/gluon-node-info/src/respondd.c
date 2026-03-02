@@ -99,7 +99,17 @@ static struct json_object * get_owner(struct uci_context *ctx, struct uci_packag
 		return NULL;
 
 	struct json_object *ret = json_object_new_object();
-	json_object_object_add(ret, "contact", gluonutil_wrap_string(contact));
+	json_object_object_add(ret, "contact", gluonutil_wrap_string("**redacted**"));
+	return ret;
+}
+
+static struct json_object * get_contact(struct uci_context *ctx, struct uci_package *p) {
+	const char *contact = get_first_option(ctx, p, "contact", "email");
+	if (!contact || !*contact)
+		return NULL;
+
+	struct json_object *ret = json_object_new_object();
+	json_object_object_add(ret, "email", gluonutil_wrap_string(contact));
 	return ret;
 }
 
@@ -130,6 +140,10 @@ static struct json_object * respondd_provider_nodeinfo(void) {
 		struct json_object *owner = get_owner(ctx, p);
 		if (owner)
 			json_object_object_add(ret, "owner", owner);
+
+		struct json_object *contact = get_contact(ctx, p);
+		if (contact)
+			json_object_object_add(ret, "contact", contact);
 
 		json_object_object_add(ret, "system", get_system(ctx, p));
 	}

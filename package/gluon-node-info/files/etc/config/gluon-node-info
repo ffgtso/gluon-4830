@@ -4,3 +4,5 @@ config location
 config owner
 
 config system
+
+config contact
