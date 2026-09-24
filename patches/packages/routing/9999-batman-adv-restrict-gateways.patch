@@ -1,0 +1,35 @@
+From bcf94e24c5e6d28feda16eb00cd8f7dbc9049fde Mon Sep 17 00:00:00 2001
+From: Gluon local patch <patch@local.invalid>
+Date: Thu, 24 Sep 2026 20:00:00 +0000
+Subject: [PATCH] batman-adv: restrict gateway originator prefix
+
+---
+ ...9999-restrict-gateway-originator-prefix.patch | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+ create mode 100644 batman-adv/patches/9999-restrict-gateway-originator-prefix.patch
+
+diff --git a/batman-adv/patches/9999-restrict-gateway-originator-prefix.patch b/batman-adv/patches/9999-restrict-gateway-originator-prefix.patch
+new file mode 100644
+index 0000000..4599462
+--- /dev/null
++++ b/batman-adv/patches/9999-restrict-gateway-originator-prefix.patch
+@@ -0,0 +1,16 @@
++--- a/net/batman-adv/gateway_common.c
+++++ b/net/batman-adv/gateway_common.c
++@@ -204,6 +204,13 @@ static void batadv_gw_tvlv_ogm_handler_v1(struct batadv_priv *bat_priv,
++ 					  void *tvlv_value, u16 tvlv_value_len)
++ {
++ 	struct batadv_tvlv_gateway_data gateway, *gateway_ptr;
+++
+++	/* Only accept gateways from the locally assigned originator prefix. */
+++	if (orig->orig[0] != 0x02 || orig->orig[1] != 0xca) {
+++		batadv_gw_node_delete(bat_priv, orig);
+++		return;
+++	}
+++
++ 	/* only fetch the tvlv value if the handler wasn't called via the
++ 	 * CIFNOTFND flag and if there is data to fetch
++ 	 */
+-- 
+2.47.3
+
